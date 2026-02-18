@@ -34,3 +34,16 @@ Since the `setoolkit` is run as root, the results are stored in root folder.
 ```bash
 sudo cp -R /root/.set/reports ~ && sudo chown -R $USER:$USER ~/reports
 ```
+
+
+## Email Blast
+The Social-Engineer Toolkit has a 'mass mailer' module where it can send out crafted emails.
+The challenge is to generate fake mails from legitimate-looking companies, these have filtering and restrictions to inhibit spammers:
+
+- **Sender Policy Framework (SPF)** is an email authentication method designed to prevent email spoofing.
+It allows domain owners to specify which mail servers are authorized to s end mail on their behalf; this helps to prevent phishing attacks and improve deliverability.
+
+- **Domain Keys Identified Mail (DKIM)** is an email authentication method that uses digital signatures to verify the sender's domain and integrity of the message.
+
+- **Domain-based Message Authentication, Reporting and Conformance (DMARC)** is an email authentication protocol that helps protect emai domains from unauthorized use, such as spoofing and phishing attacks. It works by allowing domain owners to publish policies in their DNS records that specify how to handle emails that fail authentication checks.
+
