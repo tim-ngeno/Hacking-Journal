@@ -1,8 +1,16 @@
 ## Scanning with Nmap
 
 ### Host Discovery
+Nmap's default host discovery sends:
+ - An ICMP echo request (ping)
+ - A TCP SYN to port 443
+ - A TCP ACK to port 80
+ - An ICMP timestamp request
+
+Any response means the host is up.
+
 ```bash
-sudo nmap -sn TARGET
+sudo nmap -sn TARGET # Host discover only, no port scan
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2026-01-27 07:53 EST
 Nmap scan report for 10.0.2.3
@@ -12,7 +20,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.57 seconds
 ```
 
 ### TCP Port Scanning
-Has 2 types, either a connect scan (`-sT`) or a SYN scan (`sS`).
+Has 2 types, either a connect scan (`-sT`) - completes the full handshake, or a SYN scan (`sS`) - never completes the handshake, waits for a SYN-ACK(open) or RST(closed).
 ```bash
 sudo nmap -sT TARGET
 sudo nmap -sS TARGET
@@ -78,3 +86,19 @@ Network Distance: 1 hop
 
 ### Complete scanning
 `sudo nmap -A TARGET`
+
+
+## The Nmap Scripting Engine (NSE)
+NSE scripts are Lua programs that run against discovered services.
+Some common categories:
+
+```bash
+# default   ->  Safe, fast, high-value(run with -sC)
+# vuln      ->  Check for known vulnerabilities
+# auth      ->  Test for default/no credentials
+# brute     ->  Credential brute force
+# discovery ->  Enumerate service details
+
+# Example version scan + vuln check
+nmap -sV --script=vuln 192.168.56.101
+```
